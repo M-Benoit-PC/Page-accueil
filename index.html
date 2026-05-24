@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Outils Physique-Chimie · Collège</title>
+<style>
+  :root {
+    --bg: #faf6ef;
+    --bg-soft: #f4ede0;
+    --ink: #1d1c1a;
+    --ink-soft: #5a564f;
+    --line: #d8d0bf;
+    --accent: #8a3a2a;
+    --accent-soft: #d4644f;
+    --card: #ffffff;
+    --niv-6e: #c9a227;
+    --niv-5e: #6b8e4e;
+    --niv-4e: #3d6b8e;
+    --niv-3e: #a85c3c;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: Georgia, "Iowan Old Style", "Apple Garamond", Garamond, serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+    min-height: 100vh;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* ====== Header ====== */
+  header.site-header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .site-title {
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .site-title span { color: var(--accent); font-style: italic; }
+  .site-subtitle {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ====== Sections par niveau ====== */
+  .niveau-section {
+    margin-bottom: 3rem;
+  }
+  .niveau-header {
+    margin-bottom: 1.2rem;
+    border-bottom: 1px dotted var(--line);
+    padding-bottom: 0.6rem;
+  }
+  .niveau-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .niveau-pill {
+    display: inline-block;
+    padding: 0.15rem 0.7rem;
+    border-radius: 2rem;
+    color: white;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .niveau-pill.n6e { background: var(--niv-6e); }
+  .niveau-pill.n5e { background: var(--niv-5e); }
+  .niveau-pill.n4e { background: var(--niv-4e); }
+  .niveau-pill.n3e { background: var(--niv-3e); }
+
+  /* ====== Grille des outils ====== */
+  .outils-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.9rem;
+  }
+
+  .outil-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+  .outil-card:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px -8px rgba(0,0,0,0.18);
+  }
+  .outil-card.vedette::before {
+    content: "★";
+    position: absolute;
+    top: 0.6rem;
+    right: 0.7rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+  }
+  .outil-titre {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.25;
+    padding-right: 1.2rem;
+  }
+  .outil-description {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    flex-grow: 1;
+  }
+  .outil-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+  }
+  .tag {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.7rem;
+    background: var(--bg-soft);
+    color: var(--ink-soft);
+    padding: 0.15rem 0.55rem;
+    border-radius: 2rem;
+    letter-spacing: 0.02em;
+  }
+  .outil-niveaux {
+    display: flex;
+    gap: 0.3rem;
+  }
+  .niveau-mini {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: white;
+    padding: 0.05rem 0.4rem;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+  }
+  .niveau-mini.n6e { background: var(--niv-6e); }
+  .niveau-mini.n5e { background: var(--niv-5e); }
+  .niveau-mini.n4e { background: var(--niv-4e); }
+  .niveau-mini.n3e { background: var(--niv-3e); }
+
+  /* ====== Carte "Voir tout" : 4e élément de la grille ====== */
+  .voir-tout-card {
+    background: transparent;
+    border: 1px dashed var(--accent);
+    border-radius: 4px;
+    padding: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-decoration: none;
+    color: var(--accent);
+    text-align: center;
+    min-height: 130px;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  }
+  .voir-tout-card:hover {
+    background: var(--accent);
+    color: white;
+    border-style: solid;
+    transform: translateY(-2px);
+  }
+  .voir-tout-arrow {
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+    line-height: 1;
+  }
+  .voir-tout-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .voir-tout-count {
+    font-size: 0.72rem;
+    opacity: 0.7;
+    margin-top: 0.3rem;
+  }
+
+  /* ====== Page Voir tout ====== */
+  .breadcrumb {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+  }
+  .breadcrumb a {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .listing-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-box {
+    flex: 1;
+    min-width: 240px;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 0.7rem 1rem 0.7rem 2.5rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--card);
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--ink);
+  }
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .search-box::before {
+    content: "⌕";
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-soft);
+    font-size: 1.2rem;
+  }
+
+  .toggle-niveaux {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--ink-soft);
+  }
+  .toggle-niveaux input { cursor: pointer; }
+
+  .theme-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+  .theme-chip {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.78rem;
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.15s ease;
+  }
+  .theme-chip:hover {
+    border-color: var(--ink);
+  }
+  .theme-chip.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .theme-group {
+    margin-bottom: 2.5rem;
+  }
+  .theme-group-title {
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--accent);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 0.3rem;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  /* ====== Footer ====== */
+  footer.site-footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 1rem 1rem 3rem; }
+    .site-title { font-size: 1.5rem; }
+    .niveau-title { font-size: 1.15rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="site-header">
+    <div>
+      <h1 class="site-title">Outils <span>Physique-Chimie</span></h1>
+      <div class="site-subtitle">Collège — Prototype</div>
+    </div>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="site-footer">
+    Aucune donnée personnelle collectée · Fonctionne hors ligne · Code ouvert
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   CATALOGUE
+   ============================================================ */
+const catalogue = [
+  { id: "lecture-ecriture-moleculaire", titre: "Lecture et écriture moléculaire",
+    description: "Décoder et écrire les formules chimiques des molécules courantes",
+    niveaux: ["4e"], themes: ["organisation de la matière", "molécules et atomes"],
+    vedette: true, date: "2026-05-23" },
+  { id: "proportionnalite-dimensionnee", titre: "Proportionnalité avec grandeurs",
+    description: "Manipuler des tableaux de proportionnalité avec unités réelles (vitesse, masse volumique, débit…)",
+    niveaux: ["4e", "3e"], themes: ["outils mathématiques", "proportionnalité"],
+    vedette: true, date: "2026-05-22" },
+  { id: "conversions-unites", titre: "Conversions d'unités",
+    description: "Jeu rapide sur les préfixes : mm, cm, m, km / mg, g, kg / mL, cL, L",
+    niveaux: ["5e", "4e"], themes: ["outils mathématiques", "mesures et unités"],
+    date: "2026-05-18" },
+  { id: "lecture-graphiques", titre: "Lecture de graphiques",
+    description: "Lire un graphique, repérer un point, identifier une relation",
+    niveaux: ["4e", "3e"], themes: ["outils mathématiques", "graphiques"],
+    date: "2026-05-15" },
+  { id: "notation-scientifique", titre: "Notation scientifique",
+    description: "Apprivoiser les grands et petits nombres avec les puissances de 10",
+    niveaux: ["3e"], themes: ["outils mathématiques", "ordres de grandeur"],
+    date: "2026-05-10" },
+  { id: "chaine-energetique", titre: "Chaîne énergétique",
+    description: "Assembler réservoirs, convertisseurs et formes d'énergie par glisser-déposer",
+    niveaux: ["4e", "3e"], themes: ["énergie"],
+    vedette: true, date: "2026-05-20" },
+  { id: "vitesse-chronophotographie", titre: "Vitesse et chronophotographie",
+    description: "Mesurer une vitesse sur une chronophotographie, identifier la nature du mouvement",
+    niveaux: ["4e"], themes: ["mouvement"],
+    date: "2026-05-12" },
+  { id: "representation-forces", titre: "Représentation des forces",
+    description: "Placer les flèches au bon point d'application, avec la bonne direction et le bon sens",
+    niveaux: ["3e"], themes: ["mouvement", "forces"],
+    vedette: true, date: "2026-05-19" },
+  { id: "masse-volumique", titre: "Masse volumique : flotte ou coule ?",
+    description: "Faire varier matériau, volume et liquide pour prédire le comportement",
+    niveaux: ["5e"], themes: ["organisation de la matière"],
+    vedette: true, date: "2026-05-21" },
+  { id: "construire-circuit", titre: "Construire un circuit",
+    description: "Pile, lampe, interrupteur : monter le bon circuit pour allumer la lampe",
+    niveaux: ["5e"], themes: ["électricité"],
+    date: "2026-05-14" },
+  { id: "tension-intensite", titre: "Tension et intensité",
+    description: "Brancher voltmètres et ampèremètres, lire les valeurs, vérifier les lois",
+    niveaux: ["4e"], themes: ["électricité"],
+    date: "2026-05-11" },
+  { id: "lentilles-convergentes", titre: "Lentilles convergentes",
+    description: "Tracer le trajet des rayons et construire l'image d'un objet",
+    niveaux: ["4e"], themes: ["optique"],
+    date: "2026-05-08" },
+  { id: "sources-lumiere", titre: "Sources de lumière",
+    description: "Distinguer sources primaires et objets diffusants",
+    niveaux: ["6e"], themes: ["optique"],
+    date: "2026-05-05" },
+  { id: "ombres-lumiere", titre: "Ombres et propagation",
+    description: "Prédire la forme et la taille d'une ombre selon la position de la source",
+    niveaux: ["6e"], themes: ["optique"],
+    date: "2026-05-03" },
+  { id: "etats-matiere", titre: "Les trois états de la matière",
+    description: "Glisser les molécules pour visualiser solide, liquide, gaz",
+    niveaux: ["6e", "5e"], themes: ["organisation de la matière"],
+    vedette: true, date: "2026-05-17" },
+  { id: "modeles-moleculaires", titre: "Modèles moléculaires",
+    description: "Assembler des atomes en respectant les valences pour former des molécules courantes",
+    niveaux: ["4e", "3e"], themes: ["organisation de la matière", "molécules et atomes"],
+    date: "2026-05-09" },
+  { id: "equilibrage-equations", titre: "Équilibrage d'équations",
+    description: "Trouver les coefficients qui équilibrent une équation chimique",
+    niveaux: ["3e"], themes: ["réactions chimiques"],
+    date: "2026-05-07" },
+  { id: "tests-identification", titre: "Tests d'identification",
+    description: "Enquête : identifier un échantillon mystère grâce aux tests caractéristiques",
+    niveaux: ["4e", "3e"], themes: ["réactions chimiques"],
+    date: "2026-05-06" },
+  { id: "dissolution-solubilite", titre: "Dissolution et solubilité",
+    description: "Faire varier soluté, solvant et température pour observer la limite de dissolution",
+    niveaux: ["5e"], themes: ["organisation de la matière"],
+    date: "2026-05-04" },
+  { id: "systeme-solaire-echelle", titre: "Système solaire à l'échelle",
+    description: "Voir les vraies distances et les vraies tailles des planètes",
+    niveaux: ["6e"], themes: ["astronomie", "ordres de grandeur"],
+    date: "2026-05-02" },
+  { id: "phases-lune", titre: "Phases de la Lune",
+    description: "Comprendre les phases avec un modèle Soleil-Terre-Lune interactif",
+    niveaux: ["6e"], themes: ["astronomie"],
+    date: "2026-05-01" }
+];
+
+/* ============================================================
+   UTILITAIRES
+   ============================================================ */
+
+function capitalize(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function melanger(tab) {
+  const t = [...tab];
+  for (let i = t.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [t[i], t[j]] = [t[j], t[i]];
+  }
+  return t;
+}
+
+function outilsParNiveau(niveau) {
+  if (niveau === "tous") return catalogue;
+  return catalogue.filter(o => o.niveaux.includes(niveau));
+}
+
+function selectionVedette(niveau, n = 3) {
+  const dispos = outilsParNiveau(niveau);
+  const vedettes = dispos.filter(o => o.vedette);
+  const reste = dispos
+    .filter(o => !o.vedette)
+    .sort((a, b) => b.date.localeCompare(a.date));
+  return melanger(vedettes).concat(reste).slice(0, n);
+}
+
+function carteOutil(outil) {
+  const niveauxHTML = outil.niveaux
+    .map(n => `<span class="niveau-mini n${n}">${n}</span>`)
+    .join("");
+  const tagsHTML = outil.themes
+    .slice(0, 2)
+    .map(t => `<span class="tag">${capitalize(t)}</span>`)
+    .join("");
+  const nav = JSON.stringify({ type: "outil", id: outil.id });
+  return `
+    <a class="outil-card ${outil.vedette ? 'vedette' : ''}" data-nav='${nav}' href="#">
+      <div class="outil-niveaux">${niveauxHTML}</div>
+      <div class="outil-titre">${outil.titre}</div>
+      <div class="outil-description">${outil.description}</div>
+      <div class="outil-tags">${tagsHTML}</div>
+    </a>`;
+}
+
+function carteVoirTout(niveau, total) {
+  const nav = JSON.stringify({ type: "listing", niveau: niveau });
+  return `
+    <a class="voir-tout-card" data-nav='${nav}' href="#">
+      <div class="voir-tout-arrow">→</div>
+      <div class="voir-tout-label">Voir tout</div>
+      <div class="voir-tout-count">${total} outils en ${niveau}</div>
+    </a>`;
+}
+
+/* ============================================================
+   PAGES
+   ============================================================ */
+
+function renderAccueil() {
+  const niveaux = [
+    { id: "6e", nom: "Sixième" },
+    { id: "5e", nom: "Cinquième" },
+    { id: "4e", nom: "Quatrième" },
+    { id: "3e", nom: "Troisième" }
+  ];
+
+  const sections = niveaux.map(niv => {
+    const total = outilsParNiveau(niv.id).length;
+    const outils = selectionVedette(niv.id, 3);
+    return `
+      <section class="niveau-section">
+        <div class="niveau-header">
+          <div class="niveau-title">
+            <span class="niveau-pill n${niv.id}">${niv.id}</span>
+            <span>${niv.nom}</span>
+          </div>
+        </div>
+        <div class="outils-grid">
+          ${outils.map(carteOutil).join("")}
+          ${carteVoirTout(niv.id, total)}
+        </div>
+      </section>`;
+  }).join("");
+
+  document.getElementById("app").innerHTML = sections;
+}
+
+function renderListing(niveauInitial) {
+  const noms = { "6e": "Sixième", "5e": "Cinquième", "4e": "Quatrième", "3e": "Troisième" };
+  const titre = noms[niveauInitial] || "Tous niveaux";
+
+  const navAccueil = JSON.stringify({ type: "accueil" });
+
+  document.getElementById("app").innerHTML = `
+    <div class="breadcrumb">
+      <a data-nav='${navAccueil}' href="#">Accueil</a> &nbsp;›&nbsp; ${titre}
+    </div>
+    <div class="niveau-header">
+      <div class="niveau-title">
+        ${niveauInitial !== "tous" ? `<span class="niveau-pill n${niveauInitial}">${niveauInitial}</span>` : ""}
+        <span>${titre}</span>
+      </div>
+    </div>
+    <div class="listing-controls">
+      <div class="search-box">
+        <input type="text" id="recherche" placeholder="Rechercher par mot-clé (molécule, vitesse, énergie…)" autocomplete="off">
+      </div>
+      <label class="toggle-niveaux">
+        <input type="checkbox" id="toggle-tous"> Tous niveaux confondus
+      </label>
+    </div>
+    <div class="theme-filters" id="theme-filters"></div>
+    <div id="resultats"></div>
+  `;
+
+  let niveauActif = niveauInitial;
+  let themeActif = null;
+  let recherche = "";
+
+  function rafraichir() {
+    let outils = niveauActif === "tous" ? catalogue : catalogue.filter(o => o.niveaux.includes(niveauActif));
+    if (themeActif) outils = outils.filter(o => o.themes.includes(themeActif));
+    if (recherche) {
+      const r = recherche.toLowerCase();
+      outils = outils.filter(o =>
+        o.titre.toLowerCase().includes(r) ||
+        o.description.toLowerCase().includes(r) ||
+        o.themes.some(t => t.toLowerCase().includes(r))
+      );
+    }
+
+    const themesDispos = [...new Set(
+      (niveauActif === "tous" ? catalogue : catalogue.filter(o => o.niveaux.includes(niveauActif)))
+        .flatMap(o => o.themes)
+    )].sort();
+    document.getElementById("theme-filters").innerHTML = themesDispos.map(t =>
+      `<button class="theme-chip ${t === themeActif ? 'active' : ''}" data-theme="${t}">${capitalize(t)}</button>`
+    ).join("");
+    document.querySelectorAll(".theme-chip").forEach(c => {
+      c.addEventListener("click", () => {
+        themeActif = themeActif === c.dataset.theme ? null : c.dataset.theme;
+        rafraichir();
+      });
+    });
+
+    const conteneur = document.getElementById("resultats");
+    if (outils.length === 0) {
+      conteneur.innerHTML = `<div class="empty-state">Aucun outil ne correspond à cette recherche.</div>`;
+      return;
+    }
+
+    const groupes = {};
+    outils.forEach(o => {
+      const theme = o.themes[0];
+      if (!groupes[theme]) groupes[theme] = [];
+      groupes[theme].push(o);
+    });
+
+    conteneur.innerHTML = Object.keys(groupes).sort().map(theme => `
+      <section class="theme-group">
+        <h3 class="theme-group-title">${capitalize(theme)}</h3>
+        <div class="outils-grid">
+          ${groupes[theme].map(carteOutil).join("")}
+        </div>
+      </section>
+    `).join("");
+  }
+
+  document.getElementById("recherche").addEventListener("input", e => {
+    recherche = e.target.value;
+    rafraichir();
+  });
+  document.getElementById("toggle-tous").addEventListener("change", e => {
+    niveauActif = e.target.checked ? "tous" : niveauInitial;
+    themeActif = null;
+    rafraichir();
+  });
+
+  rafraichir();
+}
+
+function renderOutil(id) {
+  const outil = catalogue.find(o => o.id === id);
+  const navAccueil = JSON.stringify({ type: "accueil" });
+  if (!outil) {
+    document.getElementById("app").innerHTML = `
+      <div class="breadcrumb"><a data-nav='${navAccueil}' href="#">← Retour à l'accueil</a></div>
+      <div class="empty-state">Outil introuvable.</div>`;
+    return;
+  }
+  document.getElementById("app").innerHTML = `
+    <div class="breadcrumb"><a data-nav='${navAccueil}' href="#">← Retour à l'accueil</a></div>
+    <div class="niveau-header">
+      <div class="niveau-title">
+        ${outil.niveaux.map(n => `<span class="niveau-pill n${n}">${n}</span>`).join(" ")}
+        <span>${outil.titre}</span>
+      </div>
+    </div>
+    <p style="margin: 1.5rem 0; font-size: 1.05rem;">${outil.description}</p>
+    <div class="outil-tags">
+      ${outil.themes.map(t => `<span class="tag">${capitalize(t)}</span>`).join("")}
+    </div>
+    <div style="margin-top: 1.5rem; background: white; border: 1px solid var(--line); border-radius: 4px; overflow: hidden;">
+      <iframe 
+        src="outils/${outil.id}/index.html" 
+        style="width: 100%; height: 75vh; border: none; display: block;"
+        title="${outil.titre}"
+        sandbox="allow-scripts allow-same-origin allow-forms"
+        onerror="this.parentElement.innerHTML='<div style=\\'padding:2rem;text-align:center;color:var(--ink-soft);font-style:italic\\'>L\\'outil n\\'est pas encore disponible à cet emplacement.</div>'"
+      ></iframe>
+    </div>
+    <p style="margin-top: 1rem; font-size: 0.8rem; color: var(--ink-soft); font-family: -apple-system, system-ui, sans-serif; text-align: center;">
+      L'outil se charge depuis <code style="background: var(--bg-soft); padding: 0.1rem 0.4rem; border-radius: 2px;">outils/${outil.id}/index.html</code>
+    </p>
+  `;
+}
+
+/* ============================================================
+   NAVIGATION — clic delegation (robuste partout)
+   ============================================================ */
+
+function naviguer(etat) {
+  if (etat.type === "accueil") renderAccueil();
+  else if (etat.type === "listing") renderListing(etat.niveau);
+  else if (etat.type === "outil") renderOutil(etat.id);
+
+  // Met à jour l'URL pour partage (sans casser si pushState échoue)
+  try {
+    let hash = "";
+    if (etat.type === "listing") hash = `voir-tout/${etat.niveau}`;
+    else if (etat.type === "outil") hash = `outil/${etat.id}`;
+    history.pushState(etat, "", hash ? `#${hash}` : "#");
+  } catch (e) { /* peu importe */ }
+
+  window.scrollTo(0, 0);
+}
+
+// Une seule délégation pour tous les clics de navigation
+document.addEventListener("click", (e) => {
+  const target = e.target.closest("[data-nav]");
+  if (target) {
+    e.preventDefault();
+    naviguer(JSON.parse(target.dataset.nav));
+  }
+});
+
+// Boutons précédent / suivant du navigateur
+window.addEventListener("popstate", (e) => {
+  if (e.state) {
+    if (e.state.type === "accueil") renderAccueil();
+    else if (e.state.type === "listing") renderListing(e.state.niveau);
+    else if (e.state.type === "outil") renderOutil(e.state.id);
+  } else {
+    renderAccueil();
+  }
+});
+
+// Chargement initial : on regarde le hash (lien partagé)
+function chargerInitial() {
+  const hash = window.location.hash.slice(1);
+  if (hash.startsWith("voir-tout/")) renderListing(hash.split("/")[1]);
+  else if (hash.startsWith("outil/")) renderOutil(hash.split("/")[1]);
+  else renderAccueil();
+}
+chargerInitial();
+</script>
+
+</body>
+</html>
