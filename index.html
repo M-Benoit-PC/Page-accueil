@@ -357,92 +357,7 @@
 /* ============================================================
    CATALOGUE
    ============================================================ */
-const catalogue = [
-  { id: "lecture-ecriture-moleculaire", titre: "Lecture et écriture moléculaire",
-    description: "Décoder et écrire les formules chimiques des molécules courantes",
-    niveaux: ["4e"], themes: ["organisation de la matière", "molécules et atomes"],
-    vedette: true, date: "2026-05-23" },
-  { id: "proportionnalite-dimensionnee", titre: "Proportionnalité avec grandeurs",
-    description: "Manipuler des tableaux de proportionnalité avec unités réelles (vitesse, masse volumique, débit…)",
-    niveaux: ["4e", "3e"], themes: ["outils mathématiques", "proportionnalité"],
-    vedette: true, date: "2026-05-22" },
-  { id: "conversions-unites", titre: "Conversions d'unités",
-    description: "Jeu rapide sur les préfixes : mm, cm, m, km / mg, g, kg / mL, cL, L",
-    niveaux: ["5e", "4e"], themes: ["outils mathématiques", "mesures et unités"],
-    date: "2026-05-18" },
-  { id: "lecture-graphiques", titre: "Lecture de graphiques",
-    description: "Lire un graphique, repérer un point, identifier une relation",
-    niveaux: ["4e", "3e"], themes: ["outils mathématiques", "graphiques"],
-    date: "2026-05-15" },
-  { id: "notation-scientifique", titre: "Notation scientifique",
-    description: "Apprivoiser les grands et petits nombres avec les puissances de 10",
-    niveaux: ["3e"], themes: ["outils mathématiques", "ordres de grandeur"],
-    date: "2026-05-10" },
-  { id: "chaine-energetique", titre: "Chaîne énergétique",
-    description: "Assembler réservoirs, convertisseurs et formes d'énergie par glisser-déposer",
-    niveaux: ["4e", "3e"], themes: ["énergie"],
-    vedette: true, date: "2026-05-20" },
-  { id: "vitesse-chronophotographie", titre: "Vitesse et chronophotographie",
-    description: "Mesurer une vitesse sur une chronophotographie, identifier la nature du mouvement",
-    niveaux: ["4e"], themes: ["mouvement"],
-    date: "2026-05-12" },
-  { id: "representation-forces", titre: "Représentation des forces",
-    description: "Placer les flèches au bon point d'application, avec la bonne direction et le bon sens",
-    niveaux: ["3e"], themes: ["mouvement", "forces"],
-    vedette: true, date: "2026-05-19" },
-  { id: "masse-volumique", titre: "Masse volumique : flotte ou coule ?",
-    description: "Faire varier matériau, volume et liquide pour prédire le comportement",
-    niveaux: ["5e"], themes: ["organisation de la matière"],
-    vedette: true, date: "2026-05-21" },
-  { id: "construire-circuit", titre: "Construire un circuit",
-    description: "Pile, lampe, interrupteur : monter le bon circuit pour allumer la lampe",
-    niveaux: ["5e"], themes: ["électricité"],
-    date: "2026-05-14" },
-  { id: "tension-intensite", titre: "Tension et intensité",
-    description: "Brancher voltmètres et ampèremètres, lire les valeurs, vérifier les lois",
-    niveaux: ["4e"], themes: ["électricité"],
-    date: "2026-05-11" },
-  { id: "lentilles-convergentes", titre: "Lentilles convergentes",
-    description: "Tracer le trajet des rayons et construire l'image d'un objet",
-    niveaux: ["4e"], themes: ["optique"],
-    date: "2026-05-08" },
-  { id: "sources-lumiere", titre: "Sources de lumière",
-    description: "Distinguer sources primaires et objets diffusants",
-    niveaux: ["6e"], themes: ["optique"],
-    date: "2026-05-05" },
-  { id: "ombres-lumiere", titre: "Ombres et propagation",
-    description: "Prédire la forme et la taille d'une ombre selon la position de la source",
-    niveaux: ["6e"], themes: ["optique"],
-    date: "2026-05-03" },
-  { id: "etats-matiere", titre: "Les trois états de la matière",
-    description: "Glisser les molécules pour visualiser solide, liquide, gaz",
-    niveaux: ["6e", "5e"], themes: ["organisation de la matière"],
-    vedette: true, date: "2026-05-17" },
-  { id: "modeles-moleculaires", titre: "Modèles moléculaires",
-    description: "Assembler des atomes en respectant les valences pour former des molécules courantes",
-    niveaux: ["4e", "3e"], themes: ["organisation de la matière", "molécules et atomes"],
-    date: "2026-05-09" },
-  { id: "equilibrage-equations", titre: "Équilibrage d'équations",
-    description: "Trouver les coefficients qui équilibrent une équation chimique",
-    niveaux: ["3e"], themes: ["réactions chimiques"],
-    date: "2026-05-07" },
-  { id: "tests-identification", titre: "Tests d'identification",
-    description: "Enquête : identifier un échantillon mystère grâce aux tests caractéristiques",
-    niveaux: ["4e", "3e"], themes: ["réactions chimiques"],
-    date: "2026-05-06" },
-  { id: "dissolution-solubilite", titre: "Dissolution et solubilité",
-    description: "Faire varier soluté, solvant et température pour observer la limite de dissolution",
-    niveaux: ["5e"], themes: ["organisation de la matière"],
-    date: "2026-05-04" },
-  { id: "systeme-solaire-echelle", titre: "Système solaire à l'échelle",
-    description: "Voir les vraies distances et les vraies tailles des planètes",
-    niveaux: ["6e"], themes: ["astronomie", "ordres de grandeur"],
-    date: "2026-05-02" },
-  { id: "phases-lune", titre: "Phases de la Lune",
-    description: "Comprendre les phases avec un modèle Soleil-Terre-Lune interactif",
-    niveaux: ["6e"], themes: ["astronomie"],
-    date: "2026-05-01" }
-];
+let catalogue = [];
 
 /* ============================================================
    UTILITAIRES
@@ -515,25 +430,102 @@ function renderAccueil() {
     { id: "3e", nom: "Troisième" }
   ];
 
-  const sections = niveaux.map(niv => {
-    const total = outilsParNiveau(niv.id).length;
-    const outils = selectionVedette(niv.id, 3);
-    return `
-      <section class="niveau-section">
-        <div class="niveau-header">
-          <div class="niveau-title">
-            <span class="niveau-pill n${niv.id}">${niv.id}</span>
-            <span>${niv.nom}</span>
-          </div>
-        </div>
-        <div class="outils-grid">
-          ${outils.map(carteOutil).join("")}
-          ${carteVoirTout(niv.id, total)}
-        </div>
-      </section>`;
-  }).join("");
+  // Structure : barre de recherche en haut + zone de contenu dynamique
+  document.getElementById("app").innerHTML = `
+    <div class="listing-controls" style="margin-bottom: 2.5rem;">
+      <div class="search-box">
+        <input type="text" id="recherche-accueil" 
+               placeholder="Rechercher dans tous les outils (molécule, vitesse, énergie…)"
+               autocomplete="off">
+      </div>
+    </div>
+    <div id="zone-contenu"></div>
+  `;
 
-  document.getElementById("app").innerHTML = sections;
+  let recherche = "";
+
+  function rangeesParNiveau() {
+    return niveaux.map(niv => {
+      const total = outilsParNiveau(niv.id).length;
+      if (total === 0) return ""; // ne pas afficher les niveaux vides
+      const outils = selectionVedette(niv.id, 3);
+      return `
+        <section class="niveau-section">
+          <div class="niveau-header">
+            <div class="niveau-title">
+              <span class="niveau-pill n${niv.id}">${niv.id}</span>
+              <span>${niv.nom}</span>
+            </div>
+          </div>
+          <div class="outils-grid">
+            ${outils.map(carteOutil).join("")}
+            ${carteVoirTout(niv.id, total)}
+          </div>
+        </section>`;
+    }).join("");
+  }
+
+  function resultatsRecherche(terme) {
+    const r = terme.toLowerCase();
+    const trouves = catalogue.filter(o =>
+      o.titre.toLowerCase().includes(r) ||
+      o.description.toLowerCase().includes(r) ||
+      o.themes.some(t => t.toLowerCase().includes(r))
+    );
+
+    if (trouves.length === 0) {
+      return `<div class="empty-state">Aucun outil ne correspond à "${terme}".</div>`;
+    }
+
+    // Regroupement par niveau pour garder la lisibilité
+    const parNiveau = {};
+    trouves.forEach(o => {
+      o.niveaux.forEach(n => {
+        if (!parNiveau[n]) parNiveau[n] = [];
+        if (!parNiveau[n].includes(o)) parNiveau[n].push(o);
+      });
+    });
+
+    const ordre = ["6e", "5e", "4e", "3e"];
+    const groupes = ordre.filter(n => parNiveau[n]).map(n => {
+      const nomNiv = niveaux.find(niv => niv.id === n).nom;
+      return `
+        <section class="niveau-section">
+          <div class="niveau-header">
+            <div class="niveau-title">
+              <span class="niveau-pill n${n}">${n}</span>
+              <span>${nomNiv}</span>
+            </div>
+          </div>
+          <div class="outils-grid">
+            ${parNiveau[n].map(carteOutil).join("")}
+          </div>
+        </section>`;
+    }).join("");
+
+    return `
+      <div style="font-family: -apple-system, system-ui, sans-serif; font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 1.5rem;">
+        ${trouves.length} outil${trouves.length > 1 ? "s" : ""} trouvé${trouves.length > 1 ? "s" : ""}
+      </div>
+      ${groupes}
+    `;
+  }
+
+  function rafraichir() {
+    const zone = document.getElementById("zone-contenu");
+    if (recherche.trim() === "") {
+      zone.innerHTML = rangeesParNiveau();
+    } else {
+      zone.innerHTML = resultatsRecherche(recherche.trim());
+    }
+  }
+
+  document.getElementById("recherche-accueil").addEventListener("input", e => {
+    recherche = e.target.value;
+    rafraichir();
+  });
+
+  rafraichir();
 }
 
 function renderListing(niveauInitial) {
@@ -706,14 +698,32 @@ window.addEventListener("popstate", (e) => {
   }
 });
 
-// Chargement initial : on regarde le hash (lien partagé)
-function chargerInitial() {
+// Chargement initial : on charge d'abord le catalogue, puis on affiche la page demandée
+async function chargerCatalogueEtAfficher() {
+  try {
+    const response = await fetch("catalogue.json", { cache: "no-cache" });
+    if (!response.ok) throw new Error("Catalogue introuvable (" + response.status + ")");
+    catalogue = await response.json();
+  } catch (e) {
+    document.getElementById("app").innerHTML = `
+      <div class="empty-state">
+        Impossible de charger le catalogue d'outils.<br>
+        <small style="display:block;margin-top:0.5rem;">Détail technique : ${e.message}</small>
+        <small style="display:block;margin-top:1rem;font-style:normal;">
+          Vérifie que le fichier <code>catalogue.json</code> est bien à la racine du site,
+          aux côtés de ce <code>portail.html</code>.
+        </small>
+      </div>`;
+    return;
+  }
+
+  // Catalogue chargé : on affiche la page demandée (ou l'accueil par défaut)
   const hash = window.location.hash.slice(1);
   if (hash.startsWith("voir-tout/")) renderListing(hash.split("/")[1]);
   else if (hash.startsWith("outil/")) renderOutil(hash.split("/")[1]);
   else renderAccueil();
 }
-chargerInitial();
+chargerCatalogueEtAfficher();
 </script>
 
 </body>
